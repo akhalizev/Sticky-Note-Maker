@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* Apply border-box sizing to all elements for consistent size calculations */
+    * {
+      box-sizing: border-box;
+    }
+    /* Style the main UI container */
+    body {
+      font-family: sans-serif; /* Clean, readable font */
+      padding: 10px; /* 10px padding on all sides (20px total vertically) */
+      margin: 0; /* No extra margins */
+      display: flex; /* Flexbox for vertical stacking */
+      flex-direction: column; /* Stack children top-to-bottom */
+      align-items: center; /* Center-align all elements */
+      font-size: 14px; /* Base font size for consistency */
+      max-height: 280px; /* 300px total height minus 20px padding to fit content */
+      overflow: hidden; /* Prevent scrolling if content exceeds bounds */
+    }
+    /* Style for color selection buttons */
+    .color-btn {
+      width: 90px; /* Wide enough for labels like "Need attention" */
+      padding: 8px; /* Comfortable padding (16px total vertically) */
+      margin: 2px; /* Small spacing between buttons */
+      border: none; /* No border for a clean look */
+      border-radius: 8px; /* Rounded corners for modern feel */
+      cursor: pointer; /* Hand cursor on hover */
+      color: white; /* White text for most colors */
+      font-weight: 600; /* Slightly bold for emphasis */
+      font-size: 14px; /* Matches body font size */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      transition: transform 0.1s, box-shadow 0.1s; /* Smooth hover animation */
+    }
+    /* Hover effect for color buttons */
+    .color-btn:hover {
+      transform: translateY(-1px); /* Slight lift for interactivity */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    }
+    /* Active (click) effect for color buttons */
+    .color-btn:active {
+      transform: translateY(0); /* Reset lift */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Flatter shadow */
+    }
+    /* Specific styles for each color button with gradients */
+    #need-attention {
+      background: linear-gradient(135deg, #ffe566, #ffd633); /* Yellow gradient */
+      color: black; /* Black text for readability */
+    }
+    #fresh-idea {
+      background: linear-gradient(135deg, #ffb3cc, #ff99b3); /* Pink gradient */
+    }
+    #note {
+      background: linear-gradient(135deg, #80b3ff, #6699ff); /* Blue gradient */
+    }
+    #approved {
+      background: linear-gradient(135deg, #99e699, #80cc80); /* Green gradient */
+    }
+    #need-fix {
+      background: linear-gradient(135deg, #ff3333, #e60000); /* Red gradient */
+    }
+    /* Style for the note input textarea */
+    #note-text {
+      width: 90%; /* Nearly full width of the UI */
+      height: 100px; /* Fixed height for ~5-6 lines at 14px */
+      padding: 6px; /* Inner padding for text comfort */
+      margin: 4px 0; /* Small vertical spacing */
+      border: 1px solid #ccc; /* Light border for definition */
+      border-radius: 5px; /* Slightly rounded corners */
+      resize: none; /* Prevent resizing to maintain layout */
+      font-size: 14px; /* Matches UI font size */
+    }
+    /* Style for the Create button */
+    #create-btn {
+      width: 90px; /* Matches color button width */
+      padding: 8px; /* Consistent padding */
+      margin: 4px 0; /* Small vertical spacing */
+      background: linear-gradient(135deg, #4CAF50, #45a049); /* Green gradient */
+      color: white; /* White text */
+      border: none; /* No border */
+      border-radius: 8px; /* Rounded corners */
+      cursor: pointer; /* Hand cursor */
+      font-size: 14px; /* Matches UI */
+      font-weight: 600; /* Bold text */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      transition: transform 0.1s, box-shadow 0.1s; /* Smooth animation */
+    }
+    /* Hover effect for Create button */
+    #create-btn:hover {
+      transform: translateY(-1px); /* Lift effect */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    }
+    /* Active effect for Create button */
+    #create-btn:active {
+      transform: translateY(0); /* Reset lift */
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Flatter shadow */
+    }
+    /* Disabled state for Create button */
+    #create-btn:disabled {
+      background: #cccccc; /* Grayed out */
+      cursor: not-allowed; /* No-click cursor */
+      box-shadow: none; /* No shadow */
+    }
+    /* Container for color buttons */
+    .color-container {
+      display: flex; /* Flexbox for horizontal layout */
+      flex-wrap: wrap; /* Wrap if needed (unlikely at 300px width) */
+      justify-content: center; /* Center buttons */
+      gap: 5px; /* Consistent spacing between buttons */
+      max-width: 100%; /* Stay within body width */
+    }
+  </style>
+</head>
+<body>
+  <!-- Container for the five color selection buttons -->
+  <div class="color-container">
+    <button class="color-btn" id="need-attention" onclick="selectColor('need-attention')">Need attention</button>
+    <button class="color-btn" id="fresh-idea" onclick="selectColor('fresh-idea')">Fresh idea</button>
+    <button class="color-btn" id="note" onclick="selectColor('note')">Note</button>
+    <button class="color-btn" id="approved" onclick="selectColor('approved')">Approved</button>
+    <button class="color-btn" id="need-fix" onclick="selectColor('need-fix')">Need fix</button>
+  </div>
+  <!-- Textarea for user to input the note content -->
+  <textarea id="note-text" placeholder="Write your note here..."></textarea>
+  <!-- Button to create the sticky note, disabled until a color is selected -->
+  <button id="create-btn" onclick="createSticky()" disabled>Create</button>
+
+  <script>
+    // Variable to store the selected color
+    let selectedColor = null;
+
+    // Function to handle color selection
+    function selectColor(color) {
+      selectedColor = color; // Store the chosen color
+      document.getElementById("create-btn").disabled = false; // Enable the Create button
+      // Visual feedback: dim all buttons, highlight the selected one
+      document.querySelectorAll(".color-btn").forEach(btn => btn.style.opacity = "0.6");
+      document.getElementById(color).style.opacity = "1";
+    }
+
+    // Function to send the sticky note data to the plugin
+    function createSticky() {
+      if (!selectedColor) return; // Do nothing if no color is selected
+      const text = document.getElementById("note-text").value; // Get the note text
+      // Send message to code.ts with color and text
+      parent.postMessage({ pluginMessage: { type: "create-sticky", color: selectedColor, text } }, "*");
+    }
+  </script>
+</body>
+</html>
