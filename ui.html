@@ -2,147 +2,150 @@
 <html>
 <head>
   <style>
-    /* Apply border-box sizing to all elements for consistent size calculations */
-    * {
-      box-sizing: border-box;
-    }
-    /* Style the main UI container */
+    * { box-sizing: border-box; }
     body {
-      font-family: sans-serif; /* Clean, readable font */
-      padding: 10px; /* 10px padding on all sides (20px total vertically) */
-      margin: 0; /* No extra margins */
-      display: flex; /* Flexbox for vertical stacking */
-      flex-direction: column; /* Stack children top-to-bottom */
-      align-items: center; /* Center-align all elements */
-      font-size: 14px; /* Base font size for consistency */
-      max-height: 280px; /* 300px total height minus 20px padding to fit content */
-      overflow: hidden; /* Prevent scrolling if content exceeds bounds */
+      font-family: sans-serif;
+      padding: 10px; /* 10px top and bottom, 10px left and right */
+      margin: 0;
+      display: flex;
+      flex-direction: row; /* Left-right layout */
+      gap: 10px; /* Space between left and right sections */
+      /* Height adapts to content within 252px plugin height */
     }
-    /* Style for color selection buttons */
-    .color-btn {
-      width: 90px; /* Wide enough for labels like "Need attention" */
-      padding: 8px; /* Comfortable padding (16px total vertically) */
-      margin: 2px; /* Small spacing between buttons */
-      border: none; /* No border for a clean look */
-      border-radius: 8px; /* Rounded corners for modern feel */
-      cursor: pointer; /* Hand cursor on hover */
-      color: white; /* White text for most colors */
-      font-weight: 600; /* Slightly bold for emphasis */
-      font-size: 14px; /* Matches body font size */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-      transition: transform 0.1s, box-shadow 0.1s; /* Smooth hover animation */
+    .left-panel {
+      display: flex;
+      flex-direction: column; /* Stack buttons vertically */
+      gap: 8px; /* Space between buttons */
+      width: 50px; /* Fixed width for icon buttons */
     }
-    /* Hover effect for color buttons */
-    .color-btn:hover {
-      transform: translateY(-1px); /* Slight lift for interactivity */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    .right-panel {
+      flex: 1; /* Take remaining width */
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
-    /* Active (click) effect for color buttons */
-    .color-btn:active {
-      transform: translateY(0); /* Reset lift */
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Flatter shadow */
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.2s;
     }
-    /* Specific styles for each color button with gradients */
-    #need-attention {
-      background: linear-gradient(135deg, #ffe566, #ffd633); /* Yellow gradient */
-      color: black; /* Black text for readability */
+    .icon-btn svg {
+      width: 24px;
+      height: 24px;
+      stroke: #333; /* Default icon color */
     }
-    #fresh-idea {
-      background: linear-gradient(135deg, #ffb3cc, #ff99b3); /* Pink gradient */
+    .icon-btn.selected svg {
+      stroke: #fff; /* White icon when selected */
     }
-    #note {
-      background: linear-gradient(135deg, #80b3ff, #6699ff); /* Blue gradient */
+    /* Selected states match sticky note colors */
+    #note.selected {
+      background: #80B3FF; /* Light blue for Note */
     }
-    #approved {
-      background: linear-gradient(135deg, #99e699, #80cc80); /* Green gradient */
+    #fresh-idea.selected {
+      background: #FFB3CC; /* Pink for Fresh Idea */
     }
-    #need-fix {
-      background: linear-gradient(135deg, #ff3333, #e60000); /* Red gradient */
+    #approved.selected {
+      background: #99E699; /* Light green for Approved */
     }
-    /* Style for the note input textarea */
+    #need-attention.selected {
+      background: #FFE666; /* Yellow for Need Attention */
+    }
+    #need-fix.selected {
+      background: #FF3333; /* Red for Need Fix */
+    }
+    /* Hover states with paler tones */
+    #note:hover:not(.selected) {
+      background: #B3D1FF; /* Paler blue for Note */
+    }
+    #fresh-idea:hover:not(.selected) {
+      background: #FFCCDD; /* Paler pink for Fresh Idea */
+    }
+    #approved:hover:not(.selected) {
+      background: #CCF0CC; /* Paler green for Approved */
+    }
+    #need-attention:hover:not(.selected) {
+      background: #FFF0B3; /* Paler yellow for Need Attention */
+    }
+    #need-fix:hover:not(.selected) {
+      background: #FF8080; /* Paler red for Need Fix */
+    }
     #note-text {
-      width: 90%; /* Nearly full width of the UI */
-      height: 100px; /* Fixed height for ~5-6 lines at 14px */
-      padding: 6px; /* Inner padding for text comfort */
-      margin: 4px 0; /* Small vertical spacing */
-      border: 1px solid #ccc; /* Light border for definition */
-      border-radius: 5px; /* Slightly rounded corners */
-      resize: none; /* Prevent resizing to maintain layout */
-      font-size: 14px; /* Matches UI font size */
+      width: 100%;
+      height: 188px; /* 232px (content) - 34px (button) - 10px (gap) */
+      resize: none;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
     }
-    /* Style for the Create button */
     #create-btn {
-      width: 90px; /* Matches color button width */
-      padding: 8px; /* Consistent padding */
-      margin: 4px 0; /* Small vertical spacing */
-      background: linear-gradient(135deg, #4CAF50, #45a049); /* Green gradient */
-      color: white; /* White text */
-      border: none; /* No border */
-      border-radius: 8px; /* Rounded corners */
-      cursor: pointer; /* Hand cursor */
-      font-size: 14px; /* Matches UI */
-      font-weight: 600; /* Bold text */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-      transition: transform 0.1s, box-shadow 0.1s; /* Smooth animation */
+      width: 100%;
+      padding: 10px; /* 34px total height with content */
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background 0.2s;
     }
-    /* Hover effect for Create button */
-    #create-btn:hover {
-      transform: translateY(-1px); /* Lift effect */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Deeper shadow */
+    #create-btn:hover:not(:disabled) {
+      background: #0056b3;
     }
-    /* Active effect for Create button */
-    #create-btn:active {
-      transform: translateY(0); /* Reset lift */
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Flatter shadow */
-    }
-    /* Disabled state for Create button */
     #create-btn:disabled {
-      background: #cccccc; /* Grayed out */
-      cursor: not-allowed; /* No-click cursor */
-      box-shadow: none; /* No shadow */
-    }
-    /* Container for color buttons */
-    .color-container {
-      display: flex; /* Flexbox for horizontal layout */
-      flex-wrap: wrap; /* Wrap if needed (unlikely at 300px width) */
-      justify-content: center; /* Center buttons */
-      gap: 5px; /* Consistent spacing between buttons */
-      max-width: 100%; /* Stay within body width */
+      background: #ccc;
+      cursor: not-allowed;
     }
   </style>
 </head>
 <body>
-  <!-- Container for the five color selection buttons -->
-  <div class="color-container">
-    <button class="color-btn" id="need-attention" onclick="selectColor('need-attention')">Need attention</button>
-    <button class="color-btn" id="fresh-idea" onclick="selectColor('fresh-idea')">Fresh idea</button>
-    <button class="color-btn" id="note" onclick="selectColor('note')">Note</button>
-    <button class="color-btn" id="approved" onclick="selectColor('approved')">Approved</button>
-    <button class="color-btn" id="need-fix" onclick="selectColor('need-fix')">Need fix</button>
+  <!-- Left: Icon buttons for sticky types in specified order -->
+  <div class="left-panel">
+    <button class="icon-btn" id="note" onclick="selectColor('note')" title="Note">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M9 12h6"/><path d="M9 16h6"/></svg>
+    </button>
+    <button class="icon-btn" id="fresh-idea" onclick="selectColor('fresh-idea')" title="Fresh Idea">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18v-6a3 3 0 0 1 6 0v6"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M9 21h6"/><path d="M3 11h3"/><path d="M18 11h3"/><path d="M5 6h2"/><path d="M17 6h2"/></svg>
+    </button>
+    <button class="icon-btn" id="approved" onclick="selectColor('approved')" title="Approved">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+    </button>
+    <button class="icon-btn" id="need-attention" onclick="selectColor('need-attention')" title="Need Attention">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    </button>
+    <button class="icon-btn" id="need-fix" onclick="selectColor('need-fix')" title="Need Fix">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/></svg>
+    </button>
   </div>
-  <!-- Textarea for user to input the note content -->
-  <textarea id="note-text" placeholder="Write your note here..."></textarea>
-  <!-- Button to create the sticky note, disabled until a color is selected -->
-  <button id="create-btn" onclick="createSticky()" disabled>Create</button>
+
+  <!-- Right: Textarea and Create button -->
+  <div class="right-panel">
+    <textarea id="note-text" placeholder="Write your note here..."></textarea>
+    <button id="create-btn" onclick="createSticky()" disabled>Create</button>
+  </div>
 
   <script>
-    // Variable to store the selected color
     let selectedColor = null;
 
-    // Function to handle color selection
     function selectColor(color) {
-      selectedColor = color; // Store the chosen color
-      document.getElementById("create-btn").disabled = false; // Enable the Create button
-      // Visual feedback: dim all buttons, highlight the selected one
-      document.querySelectorAll(".color-btn").forEach(btn => btn.style.opacity = "0.6");
-      document.getElementById(color).style.opacity = "1";
+      selectedColor = color;
+      document.getElementById("create-btn").disabled = false;
+      // Remove 'selected' class from all buttons
+      document.querySelectorAll(".icon-btn").forEach(btn => btn.classList.remove("selected"));
+      // Add 'selected' class to the clicked button
+      document.getElementById(color).classList.add("selected");
     }
 
-    // Function to send the sticky note data to the plugin
     function createSticky() {
-      if (!selectedColor) return; // Do nothing if no color is selected
-      const text = document.getElementById("note-text").value; // Get the note text
-      // Send message to code.ts with color and text
+      if (!selectedColor) return;
+      const text = document.getElementById("note-text").value;
       parent.postMessage({ pluginMessage: { type: "create-sticky", color: selectedColor, text } }, "*");
     }
   </script>

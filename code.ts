@@ -122,7 +122,7 @@ async function createStickyNote(color: Color, noteText: string): Promise<void> {
 }
 
 // Show the UI
-figma.showUI(__html__, { width: 300, height: 300 });
+figma.showUI(__html__, { width: 300, height: 252 });
 
 // Handle messages from the UI
 figma.ui.onmessage = (msg) => {
