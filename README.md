@@ -22,10 +22,10 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
 ## How to Use
 
 1. **Run the Plugin:**
-   * In Figma, go to `Plugins` -> `Sticky Note Maker` (or the name you've given it) -> `Create Sticky Note`.
+   * In Figma, go to `Plugins` -> `Sticky Note Maker`  -> `Create Sticky Note`.
    * Alternatively, you can run it via the command palette by searching for the "create" command associated with this plugin.
 2. **Enter Details:**
-   * A small UI window (300x252 pixels) will appear.
+   * A small UI window will appear.
    * Type your desired note text into the input field.
    * Select a color category that best suits your note.
 3. **Create Note:**
@@ -39,5 +39,3 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
 ---
 
 This is Version 1 of the plugin.
-
-
