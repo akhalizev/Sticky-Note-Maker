@@ -1,11 +1,15 @@
 {
   "name": "Sticky Note Maker",
-  "id": "sticky-note-maker-12345",
+  "id": "1487911262916619647",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
-  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": ["none"]
+  },
   "permissions": ["currentuser"],
+  "documentAccess": "dynamic-page",
+  "editorType": ["figma"],
   "menu": [
     {
       "name": "Create Sticky Note",

@@ -121,8 +121,10 @@ async function createStickyNote(color: Color, noteText: string): Promise<void> {
   figma.viewport.scrollAndZoomIntoView([stickyFrame]);
 }
 
-// Show the UI
-figma.showUI(__html__, { width: 300, height: 252 });
+// Show the UI when the plugin runs or via menu command
+if (figma.command === "create") {
+  figma.showUI(__html__, { width: 300, height: 252 });
+}
 
 // Handle messages from the UI
 figma.ui.onmessage = (msg) => {
