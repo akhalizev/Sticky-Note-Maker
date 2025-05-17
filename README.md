@@ -1,4 +1,4 @@
-# My First Figma Plugin - Sticky Notes
+# Sticky Note Maker
 
 This Figma plugin allows you to quickly create and place colored sticky notes on your canvas. It's perfect for adding feedback, jotting down ideas, or making annotations directly within your Figma designs.
 
@@ -22,7 +22,7 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
 ## How to Use
 
 1. **Run the Plugin:**
-   * In Figma, go to `Plugins` -> `My First Plugin` (or the name you've given it) -> `Create Sticky Note`.
+   * In Figma, go to `Plugins` -> `Sticky Note Maker` (or the name you've given it) -> `Create Sticky Note`.
    * Alternatively, you can run it via the command palette by searching for the "create" command associated with this plugin.
 2. **Enter Details:**
    * A small UI window (300x252 pixels) will appear.
