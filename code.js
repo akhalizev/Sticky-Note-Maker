@@ -43,6 +43,7 @@ function createStickyNote(color, noteText) {
         stickyFrame.resize(200, 200); // Initial size (height will adjust)
         stickyFrame.fills = [{ type: "SOLID", color }]; // Apply selected color
         stickyFrame.name = "Sticky Note";
+        stickyFrame.cornerRadius = 4; // Add 4px rounded corners
         // Set up auto-layout for vertical stacking
         stickyFrame.layoutMode = "VERTICAL";
         stickyFrame.paddingLeft = 10;
