@@ -38,6 +38,7 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
 * v1.1.0
   * Added rounded corners (4px radius)
   * Added subtle drop shadow for better visual depth
+  * Signature and date font size set to 12px
 * v1.0.0
   * Initial release with basic sticky note functionality
 
