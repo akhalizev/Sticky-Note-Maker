@@ -44,6 +44,15 @@ function createStickyNote(color, noteText) {
         stickyFrame.fills = [{ type: "SOLID", color }]; // Apply selected color
         stickyFrame.name = "Sticky Note";
         stickyFrame.cornerRadius = 4; // Add 4px rounded corners
+        // Add a subtle drop shadow
+        stickyFrame.effects = [{
+                type: "DROP_SHADOW",
+                color: { r: 0, g: 0, b: 0, a: 0.15 }, // Black with 15% opacity
+                offset: { x: 0, y: 2 },
+                radius: 4,
+                visible: true,
+                blendMode: "NORMAL"
+            }];
         // Set up auto-layout for vertical stacking
         stickyFrame.layoutMode = "VERTICAL";
         stickyFrame.paddingLeft = 10;

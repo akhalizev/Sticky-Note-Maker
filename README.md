@@ -18,6 +18,7 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
   * If a frame is selected, the sticky note will be placed just outside its top-right corner.
   * If no frame is selected, the sticky note will be centered in the current viewport.
 * **Simple UI:** Easy-to-use interface to input text and select colors.
+* **Modern Design:** Rounded corners and subtle drop shadow for a polished look.
 
 ## How to Use
 
@@ -34,8 +35,12 @@ This Figma plugin allows you to quickly create and place colored sticky notes on
 
 ## Version
 
+* v1.1.0
+  * Added rounded corners (4px radius)
+  * Added subtle drop shadow for better visual depth
 * v1.0.0
+  * Initial release with basic sticky note functionality
 
 ---
 
-This is Version 1 of the plugin.
+This is Version 1.1 of the plugin.
