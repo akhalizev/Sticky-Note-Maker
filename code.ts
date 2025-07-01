@@ -89,7 +89,7 @@ async function createStickyNote(color: Color, noteText: string): Promise<void> {
   const usernameText: TextNode = figma.createText();
   usernameText.fontName = { family: "Inter", style: "Regular" };
   usernameText.characters = `— ${figma.currentUser?.name || "Anonymous"} @ ${dateString}`;
-  usernameText.fontSize = 14;
+  usernameText.fontSize = 12;
   usernameText.fills = [{ type: "SOLID", color: { r: 0.4, g: 0.4, b: 0.4 } }]; // Gray text
   usernameText.name = "Sticky Username";
   usernameText.layoutAlign = "STRETCH";
